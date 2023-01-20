@@ -8,7 +8,6 @@ let fungusHP = 100;
 let playerAP = 100;
 
 let fungusAlive = true;
-let outOfAP = false;
 let fungusAnimation = 'walk';
 
 
@@ -68,7 +67,7 @@ function attack () {
         fungusAnimation = 'dead';
         console.log(`You have defeated the freaky fungus! You are earth's greatest hero!`);
     }
-    if (playerAP <=0) {
+    if (playerAP <12) {
         playerAP = 0;
         outOfAP = true;
         if(fungusAlive) {
@@ -81,7 +80,7 @@ function attack () {
 }
 
 function regenerator () {
-    if(fungusHP <50 && fungusHP > 0) {
+    if(fungusHP < 50 && fungusHP > 0) {
         console.log('Freaky Fungus is regenerating!');
         fungusHP++;
         render();
@@ -102,8 +101,16 @@ function render(){
     $(".freaky-fungus").attr("class", `freaky-fungus ${fungusAnimation}`);
 
     //render disable
-    $('.attack-btn').attr("disabled", outOfAP);
-
-
-
+    if (playerAP < 38) {
+        $('.dragon-blade').attr("disabled", true);
+    }
+    if (playerAP < 33) {
+        $('.star-fire').attr("disabled", true);
+    }
+    if (playerAP < 23) {
+        $('.entangle').attr("disabled", true);
+    }
+    if (playerAP < 12) {
+        $('.arcane-sceptre').attr("disabled", true);
+    }
 }
