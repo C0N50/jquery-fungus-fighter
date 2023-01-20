@@ -9,18 +9,18 @@ let playerAP = 100;
 
 let fungusAlive = true;
 let outOfAP = false;
-
+let fungusAnimation = 'walk';
 
 
 
 
 function onReady() {
-    
-    // Make sure you check the index.html file! 
-    // There are lots of buttons and things ready for you to hook into here!
-    
-    $('.attack-btn').on('click', attack);
 
+
+    $('.attack-btn').on('click', attack);
+    // Make sure you check the index.html file! 
+    // There are lots of buttons and things ready for you to hook into here!    
+   
 
     // 🧠 Remember
     // - Handle events that ->
@@ -59,27 +59,40 @@ function attack () {
             break;
     }
 
-    if (playerAP <=0 && fungusHP > 0) {
-        playerAP = 0;
-        outOfAP = true;
-        console.log(`Player Has been defeated! Humanity is Doomed!`);
-    }
     if (fungusHP <= 0) {
         fungusHP = 0;
         fungusAlive = false;
+        fungusAnimation = 'dead';
         console.log(`You have defeated the freaky fungus! You are earth's greatest hero!`);
     }
+    if (playerAP <=0) {
+        playerAP = 0;
+        outOfAP = true;
+        if(fungusAlive) {
+            fungusAnimation = 'jump';
+            console.log(`Player Has been defeated! Humanity is Doomed!`);
+        }
+    }
+
     render();
 }
 
 function render(){
 
-    //render player
+    //render player ap
     $('.ap-text').text(playerAP);
     $('#ap-meter').val(playerAP);
 
-    //render freaky fungus
+    //render freaky fungus hp
     $('.hp-text').text(fungusHP);
     $('#hp-meter').val(fungusHP);
-    
+
+    //render animation
+    $(".freaky-fungus").attr("class", `freaky-fungus ${fungusAnimation}`);
+
+    //render disable
+    $('.attack-btn').attr("disabled", outOfAP);
+
+
+
 }
