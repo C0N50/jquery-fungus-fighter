@@ -12,16 +12,14 @@ let outOfAP = false;
 let fungusAnimation = 'walk';
 
 
-
-
 function onReady() {
-
-
+    
+    setInterval(regenerator, 1000);
     $('.attack-btn').on('click', attack);
+
     // Make sure you check the index.html file! 
     // There are lots of buttons and things ready for you to hook into here!    
    
-
     // 🧠 Remember
     // - Handle events that ->
     // - Updates state which is ->
@@ -59,6 +57,11 @@ function attack () {
             break;
     }
 
+    if(fungusHP <=50) {
+        console.log('setting interval!');
+        setInterval(render, 1000, fungusHP++);
+    }
+
     if (fungusHP <= 0) {
         fungusHP = 0;
         fungusAlive = false;
@@ -75,6 +78,14 @@ function attack () {
     }
 
     render();
+}
+
+function regenerator () {
+    if(fungusHP <50 && fungusHP > 0) {
+        console.log('Freaky Fungus is regenerating!');
+        fungusHP++;
+        render();
+    }
 }
 
 function render(){
